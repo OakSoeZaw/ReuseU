@@ -1,4 +1,4 @@
-package com.reuseu;
+package com.reuseu.model;
 
 import java.time.LocalDateTime;
 
