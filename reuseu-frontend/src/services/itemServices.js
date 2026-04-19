@@ -82,3 +82,9 @@ export async function deleteItem(itemId, postedById) {
 
   return response.text();
 }
+
+export async function getClaimedItems(userId) {
+  const response = await fetch(`${BASE_URL}/claimed/${userId}`);
+  if (!response.ok) throw new Error("Failed to fetch claimed items");
+  return response.json();
+}

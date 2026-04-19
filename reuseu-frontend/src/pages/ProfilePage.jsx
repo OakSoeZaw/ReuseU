@@ -1,60 +1,64 @@
 import NavBar from "../components/NavBar";
 import "../styles/ProfilePage.css";
+import { getUserById } from "../services/userServices";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getClaimedItems } from "../services/itemServices";
 
 function ProfilePage() {
-  const user = {
-    name: "Ko",
-    rating: 5,
-    leaderboard: 4,
-    donations: 91,
-    claims: 12,
-  };
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const [claimedItems, setClaimedItems] = useState([]);
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("user"));
+    getUserById(stored.id).then((data) => setUser(data));
+    getClaimedItems(stored.id).then((data) => setClaimedItems(data));
+  }, []);
+
+  if (!user) return <p>Loading...</p>;
 
   return (
     <div className="profile-page">
-      <main className="profile-main">
-        <section className="profile-card">
-          <div className="profile-top">
-            <h1 className="profile-greeting">Hi, {user.name}!</h1>
+      <div className="profile-header">
+        <div className="profile-avatar">👤</div>
+        <p className="profile-name">{user.name}</p>
+        <p className="profile-email">{user.email}</p>
+        <p className="profile-rating">Rating</p>
+        <p className="profile-leaderboard">
+          Leaderboard <span className="profile-rank">#{user.greenScore}</span>
+        </p>
+      </div>
 
-            <div className="profile-avatar-wrap">
-              <div className="profile-avatar">
-                <span>👤</span>
+      <hr className="profile-divider" />
+
+      <div className="profile-sections">
+        <div className="profile-section-card">
+          <h2>Donations</h2>
+          <p className="profile-count">{user.donatedCount} items donated</p>
+        </div>
+        <div className="profile-section-card">
+          <h2>Claims</h2>
+          {claimedItems.length === 0 ? (
+            <p className="profile-count">No items claimed yet</p>
+          ) : (
+            claimedItems.map((item) => (
+              <div key={item.id} className="claimed-item">
+                <img
+                  src={`${import.meta.env.VITE_API_URL}/${item.imagePath}`}
+                />
+                <p>{item.title}</p>
+                <p className="item-status">{item.status}</p>
               </div>
-            </div>
+            ))
+          )}
+        </div>{" "}
+        {/* ← closes profile-section-card */}
+      </div>
 
-            <div className="profile-stats-row">
-              <div className="profile-rating">
-                <span className="profile-label">Rating</span>
-                <span className="profile-stars">{"★".repeat(user.rating)}</span>
-              </div>
-
-              <div className="profile-leaderboard">
-                <span className="profile-label">Leaderboard</span>
-                <span className="profile-rank">#{user.leaderboard}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="profile-divider"></div>
-
-          <div className="profile-bottom">
-            <div className="profile-section">
-              <h2 className="section-title">Donations</h2>
-              <div className="stat-badge">{user.donations}</div>
-            </div>
-
-            <div className="profile-section">
-              <h2 className="section-title">Claims</h2>
-              <div className="stat-badge">{user.claims}</div>
-            </div>
-          </div>
-
-          <div className="profile-action-row">
-            <button className="donate-button">DONATE</button>
-          </div>
-        </section>
-      </main>
+      <button className="donate-btn" onClick={() => navigate("/postpage")}>
+        DONATE
+      </button>
     </div>
   );
 }

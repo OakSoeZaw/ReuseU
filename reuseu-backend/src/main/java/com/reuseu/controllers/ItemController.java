@@ -36,6 +36,11 @@ public class ItemController {
         return ResponseEntity.ok(availableItems);
     }
 
+    @GetMapping("/claimed/{userId}")
+    public ResponseEntity<?> getClaimedItems(@PathVariable Long userId) {
+        return ResponseEntity.ok(itemService.getClaimedItems(userId));
+    }
+
     @PostMapping
     public ResponseEntity<?> postItem(
             @RequestParam String title,

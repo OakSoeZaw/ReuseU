@@ -7,5 +7,6 @@ import com.reuseu.model.*;
 public interface ItemRepository extends JpaRepository<Item, Long>{
     List<Item> findByStatus(ItemStatus status);
     List<Item> findByPostedById(Long postedById);
+    List<Item> findByClaimedById(Long claimedById);
     
 }
