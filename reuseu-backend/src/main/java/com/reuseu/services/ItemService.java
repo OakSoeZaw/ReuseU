@@ -1,11 +1,12 @@
 package com.reuseu.services;
 
 import com.reuseu.repository.ItemRepository;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
 
 import com.reuseu.model.*;
 
+@Service
 public class ItemService {
     private final ItemRepository itemRepository;
     private final UserService userService;
