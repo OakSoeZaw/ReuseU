@@ -6,7 +6,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +19,11 @@ export default function LoginPage() {
     setError("");
     try {
       const user = await login(email, password);
-      localStorage.setItem("user", JSON.stringify(user));
+      if (rememberMe) {
+        localStorage.setItem("user", JSON.stringify(user)); // persists after browser close
+      } else {
+        sessionStorage.setItem("user", JSON.stringify(user)); // clears when browser closes
+      }
       navigate("/feed");
     } catch (err) {
       setError(err.message);
