@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NavBar from "../components/NavBar";
+import { useNavigate } from "react-router-dom";
 import "../styles/PostPage.css";
 
 function PostPage() {
@@ -8,6 +9,8 @@ function PostPage() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
+  const navigate = useNavigate();
+
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -20,15 +23,28 @@ function PostPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const postData = {
-      title,
-      deadline,
-      description,
-      image,
-    };
+    const user = JSON.parse(localStorage.getItem("user"));
+    
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("postedById", user.id);
+    formmData.append("image", image);
 
-    console.log("Submitted:", postData);
-    alert("Post submitted");
+    try{
+      const response = await fetch("http://localhost:8080/api/items",{
+        method:"POST",
+        body: formData,
+      });
+
+      if(!response.ok) throw new Error("Failed to post item");
+
+      const item = await response.json();
+      console.log("Posted:", item);
+      navigate("/feed");
+    }catch(err){
+      console.error(err.message);
+    }
   };
 
   return (

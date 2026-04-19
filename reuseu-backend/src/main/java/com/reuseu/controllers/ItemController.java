@@ -38,7 +38,6 @@ public class ItemController {
             @RequestParam String description,
             @RequestParam Long postedById,
             @RequestParam MultipartFile image) {
-        String imagePath = "uploads/" + image.getOriginalFilename();
         try {
             Item item = itemService.postItem(title, description, imagePath, postedById);
             return ResponseEntity.ok(item);
