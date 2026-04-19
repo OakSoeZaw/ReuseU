@@ -1,5 +1,6 @@
-import "./Mainpage.css";
+import "../styles/Mainpage.css";
 import { useState } from "react";
+import ItemCard from "./ItemCard";
 
 const CATEGORIES = ["All", "Books", "Furniture", "Clothing", "Shoes", "Kitchen", "Electronics", "Dorm Essentials", "Miscellaneous"];
 const CONDITIONS = ["Any Condition", "New", "Like New", "Gently Used", "Heavily Used"];
@@ -68,14 +69,13 @@ export default function MainPage() {
       ) : (
         <div className="items-grid">
           {filtered.map(item => (
-            <div key={item.id} className="item-card">
-              <div className="item-image">No Image</div>
-              <div className="item-info">
-                <span className="item-name">{item.name}</span>
-                <span className="item-date">{item.date}</span>
-              </div>
-              <div className="item-condition">{item.condition}</div>
-            </div>
+            <ItemCard
+              key={item.id}
+              title={item.name}
+              deadline={item.date}
+              description={item.condition}
+              image={item.image}
+            />
           ))}
         </div>
       )}

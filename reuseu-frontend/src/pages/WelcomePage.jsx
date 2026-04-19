@@ -1,4 +1,4 @@
-import "./WelcomePage.css";
+import "../styles/WelcomePage.css";
 import { Link } from "react-router-dom";
 
 function WelcomePage({ onStart }) {
