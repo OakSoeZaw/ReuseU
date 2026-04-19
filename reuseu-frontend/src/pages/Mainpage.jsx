@@ -1,4 +1,4 @@
-import "./Mainpage.css";
+import "../styles/Mainpage.css";
 import { useState } from "react";
 
 const CATEGORIES = ["All", "Books", "Furniture", "Clothing", "Shoes", "Kitchen", "Electronics", "Dorm Essentials", "Miscellaneous"];
