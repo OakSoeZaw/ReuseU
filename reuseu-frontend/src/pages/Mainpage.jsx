@@ -2,6 +2,8 @@ import NavBar from "../components/NavBar";
 import "../styles/Mainpage.css";
 import { useState } from "react";
 
+import {useState, useEffect} from "react";
+
 const CATEGORIES = [
   "All",
   "Books",
@@ -21,82 +23,19 @@ const CONDITIONS = [
   "Heavily Used",
 ];
 
-const items = [
-  {
-    id: 1,
-    name: "Calculus Textbook",
-    category: "Books",
-    condition: "New",
-    date: "Apr 15",
-  },
-  {
-    id: 2,
-    name: "Desk Lamp",
-    category: "Electronics",
-    condition: "Like New",
-    date: "Apr 14",
-  },
-  {
-    id: 3,
-    name: "Winter Jacket",
-    category: "Clothing",
-    condition: "New",
-    date: "Apr 13",
-  },
-  {
-    id: 4,
-    name: "Mini Fridge",
-    category: "Dorm Essentials",
-    condition: "Heavily Used",
-    date: "Apr 12",
-  },
-  {
-    id: 5,
-    name: "Running Shoes",
-    category: "Shoes",
-    condition: "Gently Used",
-    date: "Apr 11",
-  },
-  {
-    id: 6,
-    name: "Coffee Maker",
-    category: "Kitchen",
-    condition: "Like New",
-    date: "Apr 10",
-  },
-  {
-    id: 7,
-    name: "Wooden Chair",
-    category: "Furniture",
-    condition: "Gently Used",
-    date: "Apr 9",
-  },
-  {
-    id: 8,
-    name: "Backpack",
-    category: "Miscellaneous",
-    condition: "New",
-    date: "Apr 8",
-  },
-  {
-    id: 9,
-    name: "Physics Textbook",
-    category: "Books",
-    condition: "Gently Used",
-    date: "Apr 7",
-  },
-  {
-    id: 10,
-    name: "Headphones",
-    category: "Electronics",
-    condition: "Like New",
-    date: "Apr 6",
-  },
-];
+
 
 export default function MainPage() {
+  const [items, setItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedConditions, setSelectedConditions] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhose:8080/api/items")
+      .then((res) => res.json())
+      .then((data) => setItems(data))
+      .catch((err) => console.error("Failed to fetch items:", err));
+  }, []);
 
   function toggleCondition(cond) {
     if (cond === "Any Condition") {
