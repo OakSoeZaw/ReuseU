@@ -56,5 +56,16 @@ public class ItemService {
 
         return item;
     }
+
+    public void deleteItem(Long itemId, Long requestedById){
+        Item item = itemRepository.findById(itemId)
+            .orElseThrow(() -> new RuntimeException("Item not found"));
+        
+        if(!item.getPostedById().equals(requestedById)){
+            throw new RuntimeException("You can only delete your own items");
+        }
+
+        itemRepository.deleteById(itemId);
+    }
     
 }
