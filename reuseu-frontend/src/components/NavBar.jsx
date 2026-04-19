@@ -10,7 +10,7 @@ function NavBar() {
 
                 <div className="header-nav-placeholder"></div>
 
-                <button className="header-profile" onClick={onProfileClick}>
+                <button className="header-profile" onClick={() => navigate("/profilepage")}>
                     Profile
                 </button>
             </div>
