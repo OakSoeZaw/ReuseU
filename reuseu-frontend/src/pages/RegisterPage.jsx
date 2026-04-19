@@ -6,7 +6,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { register } from "../services/authServices";
 
-
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,7 +27,7 @@ export default function RegisterPage() {
     try {
       const user = await register(name, email, password);
       localStorage.setItem("user", JSON.stringify(user));
-      Navigate("/feed");
+      navigate("/feed");
     } catch (err) {
       setError(err.message);
     }

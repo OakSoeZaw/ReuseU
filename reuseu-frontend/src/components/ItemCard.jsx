@@ -1,6 +1,6 @@
 import "../styles/ItemCard.css";
 
-function ItemCard({ itemName, userName, deadline, image }) {
+function ItemCard({ itemName, userName, deadline, image, onClaim }) {
   return (
     <div className="item-card">
       <div className="card-image">
@@ -22,6 +22,9 @@ function ItemCard({ itemName, userName, deadline, image }) {
           </div>
         </div>
       </div>
+      <button className="claim-btn" onClick={onClaim}>
+        Claim
+      </button>
     </div>
   );
 }

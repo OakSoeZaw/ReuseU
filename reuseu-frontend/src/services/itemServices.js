@@ -88,3 +88,9 @@ export async function getClaimedItems(userId) {
   if (!response.ok) throw new Error("Failed to fetch claimed items");
   return response.json();
 }
+
+export async function getPostedItems(userId) {
+  const response = await fetch(`${BASE_URL}/posted/${userId}`);
+  if (!response.ok) throw new Error("Failed to fetch posted items");
+  return response.json();
+}

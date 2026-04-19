@@ -134,3 +134,20 @@ html, body, #root {
 .fab:hover {
   background: #1b3a2d;
 }
+
+.claim-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.claim-btn:hover {
+  background-color: #16a34a;
+}

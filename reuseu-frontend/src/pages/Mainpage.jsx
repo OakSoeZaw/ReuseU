@@ -1,7 +1,7 @@
 import "../styles/Mainpage.css";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { getAvailableItems } from "../services/itemServices";
+import { getAvailableItems, claimItem } from "../services/itemServices";
 
 const CATEGORIES = [
   "All",
@@ -58,6 +58,18 @@ export default function MainPage() {
     return categoryMatch && conditionMatch;
   });
 
+  const handleClaim = async (itemId) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    try {
+      await claimItem(itemId, user.id);
+      // refresh the list after claiming
+      const updated = await getAvailableItems();
+      setItems(updated);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
     <>
       <main className="main-container">
@@ -98,6 +110,7 @@ export default function MainPage() {
                 userName={item.postedById}
                 deadline={new Date(item.postedAt).toLocaleDateString()}
                 image={`${import.meta.env.VITE_API_URL}/${item.imagePath}`}
+                onClaim={() => handleClaim(item.id)}
               />
             ))}
           </div>

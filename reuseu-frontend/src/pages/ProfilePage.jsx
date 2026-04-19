@@ -3,18 +3,38 @@ import "../styles/ProfilePage.css";
 import { getUserById } from "../services/userServices";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getClaimedItems } from "../services/itemServices";
+import {
+  getClaimedItems,
+  getPostedItems,
+  confirmPickup,
+} from "../services/itemServices";
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [claimedItems, setClaimedItems] = useState([]);
+  const [postedItems, setPostedItems] = useState([]);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("user"));
     getUserById(stored.id).then((data) => setUser(data));
     getClaimedItems(stored.id).then((data) => setClaimedItems(data));
+    getPostedItems(stored.id).then((data) => {
+      console.log("posted items:", data); // ← add this
+      setPostedItems(data);
+    });
   }, []);
+
+  const handleConfirm = async (itemId) => {
+    try {
+      await confirmPickup(itemId);
+      const stored = JSON.parse(localStorage.getItem("user"));
+      getUserById(stored.id).then((data) => setUser(data));
+      getPostedItems(stored.id).then((data) => setPostedItems(data));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   if (!user) return <p>Loading...</p>;
 
@@ -36,6 +56,23 @@ function ProfilePage() {
         <div className="profile-section-card">
           <h2>Donations</h2>
           <p className="profile-count">{user.donatedCount} items donated</p>
+          {postedItems
+            .filter((item) => item.status === "CLAIMED")
+            .map((item) => (
+              <div key={item.id} className="claimed-item">
+                <img
+                  src={`${import.meta.env.VITE_API_URL}/${item.imagePath}`}
+                />
+                <p>{item.title}</p>
+                <p className="item-status">🔔 Someone claimed this!</p>
+                <button
+                  className="confirm-btn"
+                  onClick={() => handleConfirm(item.id)}
+                >
+                  Confirm Pickup ✅
+                </button>
+              </div>
+            ))}
         </div>
         <div className="profile-section-card">
           <h2>Claims</h2>
@@ -48,7 +85,11 @@ function ProfilePage() {
                   src={`${import.meta.env.VITE_API_URL}/${item.imagePath}`}
                 />
                 <p>{item.title}</p>
-                <p className="item-status">{item.status}</p>
+                <p className="item-status">
+                  {item.status === "CLAIMED"
+                    ? "⏳ Waiting for pickup"
+                    : "✅ Picked up"}
+                </p>
               </div>
             ))
           )}

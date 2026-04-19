@@ -93,4 +93,9 @@ public class ItemController {
 
     }
 
+    @GetMapping("/posted/{userId}")
+    public ResponseEntity<?> getPostedItems(@PathVariable Long userId) {
+        return ResponseEntity.ok(itemService.getPostedItems(userId));
+    }
+
 }

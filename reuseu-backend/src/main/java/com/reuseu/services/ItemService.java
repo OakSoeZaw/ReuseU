@@ -29,6 +29,10 @@ public class ItemService {
         return itemRepository.findByClaimedById(userId);
     }
 
+    public List<Item> getPostedItems(Long userId) {
+        return itemRepository.findByPostedById(userId);
+    }
+
     public List<Item> getAvailableItems() {
         return itemRepository.findByStatus(ItemStatus.AVAILABLE);
     }
