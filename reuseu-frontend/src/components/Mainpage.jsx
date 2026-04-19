@@ -1,4 +1,4 @@
-import "./Mainpage.css";
+import "./MainPage.css";
 import { useState } from "react";
 import ItemCard from "./ItemCard";
 
