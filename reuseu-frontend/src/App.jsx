@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import ItemCard from "./components/ItemCard"
 import PostPage from "./components/PostPage"
 import MainPage from "./components/MainPage";
+import ProfilePage from "./components/ProfilePage"
 
 
 function App() {
