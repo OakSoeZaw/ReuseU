@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
-import Login from "./pages/Login";
 
 import NavBar from "./components/NavBar";
 import ItemCard from "./components/ItemCard";
 import PostPage from "./pages/PostPage";
 import MainPage from "./pages/Mainpage";
 import ProfilePage from "./pages/ProfilePage";
+import Login from "./pages/Login";
 
 function App() {
   return (
