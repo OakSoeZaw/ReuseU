@@ -97,7 +97,7 @@ export default function MainPage() {
                 itemName={item.title}
                 userName={item.postedById}
                 deadline={new Date(item.postedAt).toLocaleDateString()}
-                image={`http://localhost:8080/${item.imagePath}`}
+                image={`${import.meta.env.VITE_API_URL}/${item.imagePath}`}
               />
             ))}
           </div>
