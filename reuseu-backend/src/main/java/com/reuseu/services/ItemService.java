@@ -1,15 +1,12 @@
 package com.reuseu.services;
 
 import com.reuseu.repository.ItemRepository;
-
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
-
-import com.reuseu.repository.*;
 import com.reuseu.model.*;
 
+@Service
 public class ItemService {
     private final ItemRepository itemRepository;
     private final UserService userService;
@@ -58,6 +55,17 @@ public class ItemService {
         userService.incrementGreenScore(item.getPostedById());
 
         return item;
+    }
+
+    public void deleteItem(Long itemId, Long requestedById){
+        Item item = itemRepository.findById(itemId)
+            .orElseThrow(() -> new RuntimeException("Item not found"));
+        
+        if(!item.getPostedById().equals(requestedById)){
+            throw new RuntimeException("You can only delete your own items");
+        }
+
+        itemRepository.deleteById(itemId);
     }
     
 }
