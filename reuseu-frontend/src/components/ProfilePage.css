@@ -32,7 +32,7 @@
   font-size: 52px;
   font-weight: 700;
   margin: 8px 0 28px;
-  color: black;
+  color: #05070b;
 }
 
 .profile-avatar-wrap {
@@ -112,6 +112,7 @@
   font-size: 32px;
   margin: 0 0 24px;
   font-weight: 700;
+  color:#05070b;
 }
 
 .stat-badge {
