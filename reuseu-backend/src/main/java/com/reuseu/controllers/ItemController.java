@@ -1,0 +1,101 @@
+package com.reuseu.controllers;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.reuseu.services.*;
+import com.reuseu.model.*;
+import java.util.Optional;
+import java.util.UUID;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.nio.file.Path;
+
+@RestController
+@RequestMapping("/api/items")
+public class ItemController {
+
+    private final ItemService itemService;
+
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllItems() {
+        List<Item> allItems = itemService.getAllItems();
+        return ResponseEntity.ok(allItems);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getItems() {
+        List<Item> availableItems = itemService.getAvailableItems();
+        return ResponseEntity.ok(availableItems);
+    }
+
+    @GetMapping("/claimed/{userId}")
+    public ResponseEntity<?> getClaimedItems(@PathVariable Long userId) {
+        return ResponseEntity.ok(itemService.getClaimedItems(userId));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> postItem(
+            @RequestParam String title,
+            @RequestParam String description,
+            @RequestParam Long postedById,
+            @RequestParam MultipartFile image) {
+        try {
+            String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
+            Path uploadDir = Paths.get("uploads");
+            Files.createDirectories(uploadDir);
+            Files.copy(image.getInputStream(), uploadDir.resolve(filename));
+
+            String imagePath = "uploads/" + filename;
+            Item item = itemService.postItem(title, description, imagePath, postedById);
+            return ResponseEntity.ok(item);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/claim")
+    public ResponseEntity<?> claimItem(@PathVariable Long id, @RequestBody Map<String, Long> body) {
+        Long claimedId = body.get("claimedById");
+        try {
+            Item item = itemService.claimItem(id, claimedId);
+            return ResponseEntity.ok(item);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/confirm")
+    public ResponseEntity<?> confirmPickup(@PathVariable Long id) {
+        try {
+            Item item = itemService.confirmPickup(id);
+            return ResponseEntity.ok(item);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteItem(@PathVariable Long id, @RequestParam Long postedById) {
+        try {
+            itemService.deleteItem(id, postedById);
+            return ResponseEntity.ok("Item deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/posted/{userId}")
+    public ResponseEntity<?> getPostedItems(@PathVariable Long userId) {
+        return ResponseEntity.ok(itemService.getPostedItems(userId));
+    }
+
+}
