@@ -29,7 +29,7 @@ function PostPage() {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("postedById", user.id);
-    formmData.append("image", image);
+    formData.append("image", image);
 
     try{
       const response = await fetch("http://localhost:8080/api/items",{
