@@ -85,12 +85,19 @@ input[type="text"]:focus {
 
 .show-hide {
   position: absolute;
-  right: 14px;
+  right: 12px;
   background: none;
   border: none;
   color: #22c55e;
-  font-size: 13px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.show-hide:hover {
+  color: #16a34a;
 }
 
 .remember-me {
