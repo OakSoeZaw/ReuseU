@@ -1,4 +1,7 @@
 spring:
+  web:
+    resources:
+      static-locations: file:uploads/,classpath:/static/
   datasource:
     url: jdbc:postgresql://localhost:5432/reuseu
     username: postgres
