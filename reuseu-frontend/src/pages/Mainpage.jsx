@@ -1,7 +1,6 @@
 import NavBar from "../components/NavBar";
 import "../styles/Mainpage.css";
 import { useState } from "react";
-import NavBar from "../components/NavBar";
 
 const CATEGORIES = [
   "All",
@@ -121,31 +120,33 @@ export default function MainPage() {
   });
 
   return (
-    <main className="main-container">
-      <div className="filters">
-        <div className="filter-row">
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat}
-              className={`filter-btn ${selectedCategory === cat ? "active" : ""}`}
-              onClick={() => setSelectedCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
+    <>
+      <NavBar />
+      <main className="main-container">
+        <div className="filters">
+          <div className="filter-row">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                className={`filter-btn ${selectedCategory === cat ? "active" : ""}`}
+                onClick={() => setSelectedCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="filter-row">
+            {CONDITIONS.map((cond) => (
+              <button
+                key={cond}
+                className={`filter-btn ${cond === "Any Condition" && selectedConditions.length === 0 ? "active" : ""} ${selectedConditions.includes(cond) ? "active" : ""}`}
+                onClick={() => toggleCondition(cond)}
+              >
+                {cond}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="filter-row">
-          {CONDITIONS.map(cond => (
-            <button
-              key={cond}
-              className={`filter-btn ${cond === "Any Condition" && selectedConditions.length === 0 ? "active" : ""} ${selectedConditions.includes(cond) ? "active" : ""}`}
-              onClick={() => toggleCondition(cond)}
-            >
-              {cond}
-            </button>
-          ))}
-        </div>
-      </div>
 
         {filtered.length === 0 ? (
           <p className="no-items">No items match your filters.</p>
