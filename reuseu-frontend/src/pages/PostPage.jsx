@@ -2,6 +2,7 @@ import { useState } from "react";
 import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
 import "../styles/PostPage.css";
+import { createItem } from "../services/itemServices";
 
 function PostPage() {
   const [title, setTitle] = useState("");
@@ -24,21 +25,8 @@ function PostPage() {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("postedById", user.id);
-    formData.append("image", image);
-
     try {
-      const response = await fetch("http://localhost:8080/api/items", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Failed to post item");
-
-      const item = await response.json();
+      const item = await createItem(title, description, user.id, image);
       console.log("Posted:", item);
       navigate("/feed");
     } catch (err) {
