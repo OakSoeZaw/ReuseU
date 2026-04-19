@@ -20,6 +20,12 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllItems() {
+        List<Item> allItems = itemService.getAllItems();
+        return ResponseEntity.ok(allItems);
+    }
+
     @GetMapping
     public ResponseEntity<?> getItems() {
         List<Item> availableItems = itemService.getAvailableItems();
