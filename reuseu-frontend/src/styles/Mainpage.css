@@ -112,3 +112,25 @@ html, body, #root {
   margin-top: 40px;
   text-align: center;
 }
+
+.fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #2e7d4f;
+  color: white;
+  font-size: 32px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.fab:hover {
+  background: #1b3a2d;
+}
