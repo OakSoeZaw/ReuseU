@@ -19,7 +19,7 @@ function App() {
       <Route path="/postpage" element={<PostPage />} />
       <Route path="/NavBar" element={<NavBar />} />
       <Route path="/main" element={<MainPage />} />
-
+      <Route path="/profilepage" element={<ProfilePage />} />
     </Routes>
   )
 }

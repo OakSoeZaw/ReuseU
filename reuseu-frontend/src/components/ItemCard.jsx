@@ -1,25 +1,29 @@
 import "./ItemCard.css";
-import NavBar from "./NavBar"
 
-function ItemCard({ title, deadline, description, image }) {
-    return (
-        <div className="item-card">
-            <div className="card-top">
-                <div className="card-image">
-                    <img src={image} alt={title} />
-                </div>
+function ItemCard({ itemName, userName, deadline, image }) {
+  return (
+    <div className="item-card">
+      <div className="card-image">
+        {image ? (
+          <img src={image} alt={itemName} />
+        ) : (
+          <div className="image-placeholder">picture</div>
+        )}
+      </div>
 
-                <div className="card-info">
-                    <h3 className="card-title">{title}</h3>
-                    <p className="card-deadline">deadline: {deadline}</p>
-                </div>
-            </div>
+      <div className="card-bottom">
+        <div className="card-avatar">👤</div>
 
-            <p className="card-description">
-                {description}
-            </p>
+        <div className="card-text">
+          <h3 className="card-title">{itemName}</h3>
+          <div className="card-meta">
+            <span className="card-name">{userName}</span>
+            <span className="card-deadline">{deadline}</span>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default ItemCard;

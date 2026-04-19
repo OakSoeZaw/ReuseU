@@ -1,0 +1,181 @@
+.profile-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #05070b 0%, #0b0d12 50%, #080a0f 100%);
+}
+
+.profile-main {
+  padding: 36px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 1000px;
+  min-height: 650px;
+  background: #f8fafc;
+  border-radius: 28px;
+  padding: 36px 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-greeting {
+  font-size: 52px;
+  font-weight: 700;
+  margin: 8px 0 28px;
+}
+
+.profile-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.profile-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 58px;
+}
+
+.profile-stats-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.profile-rating,
+.profile-leaderboard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.profile-stars {
+  font-size: 24px;
+  color: #f59e0b;
+  letter-spacing: 2px;
+}
+
+.profile-rank {
+  font-size: 24px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.profile-divider {
+  height: 1px;
+  background: #cbd5e1;
+  margin: 28px 0;
+}
+
+.profile-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  flex: 1;
+}
+
+.profile-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  min-height: 220px;
+}
+
+.section-title {
+  font-size: 32px;
+  margin: 0 0 24px;
+  font-weight: 700;
+}
+
+.stat-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  border: 2px solid #cbd5e1;
+  color: #0f172a;
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.donate-button {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.donate-button:hover {
+  opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 24px;
+  }
+
+  .profile-greeting {
+    font-size: 36px;
+    text-align: center;
+  }
+
+  .profile-stats-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .profile-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 26px;
+  }
+
+  .profile-action-row {
+    justify-content: center;
+  }
+
+  .donate-button {
+    width: 100%;
+  }
+}
