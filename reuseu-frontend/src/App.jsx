@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Route, Routes} from 'react-router-dom'
 import WelcomePage from "./components/WelcomePage";
 import Login from "./components/Login";
-import Header from "./components/Header";
+import Header from "./components/NavBar";
 
 
 function App() {
