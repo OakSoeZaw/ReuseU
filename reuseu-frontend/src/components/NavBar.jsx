@@ -1,6 +1,9 @@
 import "../styles/NavBar.css";
+import { useNavigate } from "react-router-dom";
 
 function NavBar() {
+    const navigate = useNavigate();
+
     return (
         <header className="app-header">
             <div className="header-top">

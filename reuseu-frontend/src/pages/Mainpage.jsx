@@ -1,5 +1,6 @@
 import "../styles/Mainpage.css";
 import { useState } from "react";
+import NavBar from "../components/NavBar";
 
 const CATEGORIES = ["All", "Books", "Furniture", "Clothing", "Shoes", "Kitchen", "Electronics", "Dorm Essentials", "Miscellaneous"];
 const CONDITIONS = ["Any Condition", "New", "Like New", "Gently Used", "Heavily Used"];
@@ -38,6 +39,7 @@ export default function MainPage() {
 
   return (
     <main className="main-container">
+      <NavBar />
       <div className="filters">
         <div className="filter-row">
           {CATEGORIES.map(cat => (
