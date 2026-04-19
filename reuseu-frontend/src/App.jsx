@@ -4,10 +4,10 @@ import WelcomePage from "./components/WelcomePage";
 import Login from "./components/Login";
 
 import NavBar from "./components/NavBar";
-import ItemCard from "./components/ItemCard"
-import PostPage from "./components/PostPage"
+import ItemCard from "./components/ItemCard";
+import PostPage from "./components/PostPage";
 import MainPage from "./components/MainPage";
-import ProfilePage from "./components/ProfilePage"
+import ProfilePage from "./components/ProfilePage";
 
 
 function App() {

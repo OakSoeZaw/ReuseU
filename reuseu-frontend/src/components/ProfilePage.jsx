@@ -3,7 +3,7 @@ import "./ProfilePage.css";
 
 function ProfilePage() {
   const user = {
-    name: "Kou",
+    name: "Ko",
     rating: 5,
     leaderboard: 4,
     donations: 91,
@@ -12,7 +12,6 @@ function ProfilePage() {
 
   return (
     <div className="profile-page">
-      <NavBar />
 
       <main className="profile-main">
         <section className="profile-card">
