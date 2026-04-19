@@ -28,7 +28,7 @@ export default function RegisterPage() {
     try {
       const user = await register(name, email, password);
       localStorage.setItem("user", JSON.stringify(user));
-      Navigate("/main");
+      Navigate("/feed");
     } catch (err) {
       setError(err.message);
     }
