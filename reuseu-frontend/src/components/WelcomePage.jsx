@@ -2,6 +2,7 @@ import "./WelcomePage.css"
 
 function WelcomePage({ onStart }){
   return (
+    <>
       <div className="welcome-page">
           <div className="welcome-overlay"></div>
 
@@ -20,6 +21,7 @@ function WelcomePage({ onStart }){
               </button>
           </div>
       </div>
+    </>
   );
 }
 

@@ -1,19 +1,18 @@
 import { useState } from "react";
-import WelcomePage from "./components/Header";
+import { Route, Routes} from 'react-router-dom'
+import WelcomePage from "./components/WelcomePage";
+import Login from "./components/Login";
+import Header from "./components/Header";
+
 
 function App() {
-    const [started, setStarted] = useState(false);
-    return <WelcomePage onStart={() => setStarted(true)} />;
-//     if(!started){
-//         return <WelcomePage onStart={() => setStarted(true)} />;
-//     }
-//
-//     return(
-//         <div>
-//             <h2>Login Page</h2>
-//             <p>Build next screen in here</p>
-//         </div>
-//     );
+  return(
+    <Routes>
+      <Route path="/" element={<WelcomePage />} />
+      <Route path="/login" element={<WelcomePage />} />
+
+    </Routes>
+  )
 }
 
 export default App;

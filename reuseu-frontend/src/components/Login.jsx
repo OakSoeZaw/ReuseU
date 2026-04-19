@@ -551,7 +551,9 @@ function RegisterForm({ onSwitch }) {
   );
 }
 
-export default function Login() {
+// export default function Login() {
+//   const [view, setView] = useState("login");
+export default function Login({ onSuccess }) {
   const [view, setView] = useState("login");
 
   return (
@@ -562,7 +564,10 @@ export default function Login() {
           <div className="card-logo">ReuseU</div>
           <div className="card-portal">Student Portal</div>
           {view === "login"
-            ? <LoginForm onSwitch={() => setView("register")} />
+            ? <LoginForm
+            onSwitch={() => setView("register")}
+            onSuccess={onSuccess}
+            />
             : <RegisterForm onSwitch={() => setView("login")} />
           }
         </div>
