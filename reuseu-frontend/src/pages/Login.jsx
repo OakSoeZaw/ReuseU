@@ -21,7 +21,7 @@ export default function LoginPage() {
     try {
       const user = await login(email, password);
       localStorage.setItem("user", JSON.stringify(user));
-      navigate("/main");
+      navigate("/feed");
     } catch (err) {
       setError(err.message);
     }
