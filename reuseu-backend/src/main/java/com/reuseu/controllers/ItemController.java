@@ -7,8 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.reuseu.services.*;
 import com.reuseu.model.*;
 import java.util.Optional;
+import java.util.UUID;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/items")
@@ -39,6 +43,12 @@ public class ItemController {
             @RequestParam Long postedById,
             @RequestParam MultipartFile image) {
         try {
+            String filename = UUID.randomUUID() + "_" + image.getOriginalFilename();
+            Path uploadDir = Paths.get("uploads");
+            Files.createDirectories(uploadDir);
+            Files.copy(image.getInputStream(), uploadDir.resolve(filename));
+
+            String imagePath = "uploads/" + filename;
             Item item = itemService.postItem(title, description, imagePath, postedById);
             return ResponseEntity.ok(item);
         } catch (Exception e) {
