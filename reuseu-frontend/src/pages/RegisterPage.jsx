@@ -1,9 +1,11 @@
 import "../styles/LoginPage.css";
 import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { register } from "../services/authServices";
+
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -12,6 +14,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -25,7 +28,7 @@ export default function RegisterPage() {
     try {
       const user = await register(name, email, password);
       localStorage.setItem("user", JSON.stringify(user));
-      window.location.href = "/feed";
+      Navigate("/main");
     } catch (err) {
       setError(err.message);
     }

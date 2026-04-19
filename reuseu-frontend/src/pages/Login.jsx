@@ -4,6 +4,8 @@ import { useState } from "react";
 import { login } from "../services/authServices";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,6 +13,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,7 +21,7 @@ export default function LoginPage() {
     try {
       const user = await login(email, password);
       localStorage.setItem("user", JSON.stringify(user));
-      window.location.href = "/feed";
+      navigate("/main");
     } catch (err) {
       setError(err.message);
     }

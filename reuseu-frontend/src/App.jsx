@@ -17,8 +17,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/itemcard" element={<ItemCard />} />
       <Route path="/postpage" element={<PostPage />} />
-      <Route path="/NavBar" element={<NavBar />} />
-      <Route path="/main" element={<MainPage />} />
+      <Route path="/feed" element={<MainPage />} />
       <Route path="/profilepage" element={<ProfilePage />} />
       <Route path="/register" element={<RegisterPage />} />
     </Routes>
