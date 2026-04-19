@@ -56,23 +56,29 @@ function ProfilePage() {
         <div className="profile-section-card">
           <h2>Donations</h2>
           <p className="profile-count">{user.donatedCount} items donated</p>
-          {postedItems
-            .filter((item) => item.status === "CLAIMED")
-            .map((item) => (
-              <div key={item.id} className="claimed-item">
-                <img
-                  src={`${import.meta.env.VITE_API_URL}/${item.imagePath}`}
-                />
+          {/* Show all posted items */}
+          {postedItems.map((item) => (
+            <div key={item.id} className="claimed-item">
+              <img src={`${import.meta.env.VITE_API_URL}/${item.imagePath}`} />
+              <div>
                 <p>{item.title}</p>
-                <p className="item-status">🔔 Someone claimed this!</p>
+                <p className="item-status">
+                  {item.status === "AVAILABLE" && "🟢 Available"}
+                  {item.status === "CLAIMED" && "🔔 Someone claimed this!"}
+                  {item.status === "TAKEN" && "✅ Donated"}
+                </p>
+              </div>
+              {/* Show confirm button only if claimed */}
+              {item.status === "CLAIMED" && (
                 <button
                   className="confirm-btn"
                   onClick={() => handleConfirm(item.id)}
                 >
                   Confirm Pickup ✅
                 </button>
-              </div>
-            ))}
+              )}
+            </div>
+          ))}
         </div>
         <div className="profile-section-card">
           <h2>Claims</h2>
