@@ -10,7 +10,9 @@ function NavBar() {
 
                 <div className="header-nav-placeholder"></div>
 
-                <button className="header-profile">Profile</button>
+                <button className="header-profile" onClick={onProfileClick}>
+                    Profile
+                </button>
             </div>
 
             <div className="header-bottom">

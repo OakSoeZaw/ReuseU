@@ -18,7 +18,7 @@ function App() {
       <Route path="/itemcard" element={<ItemCard />} />
       <Route path="/postpage" element={<PostPage />} />
       <Route path="/main" element={<MainPage />} />
-
+      <Route path="/profilepage" element={<ProfilePage />} />
     </Routes>
   )
 }
