@@ -1,6 +1,6 @@
 import { useState } from "react";
-import NavBar from "./NavBar";
-import "./PostPage.css";
+import NavBar from "../components/NavBar";
+import "../styles/PostPage.css";
 
 function PostPage() {
   const [title, setTitle] = useState("");
@@ -40,7 +40,11 @@ function PostPage() {
           <div className="post-top">
             <label className="post-image-box">
               {preview ? (
-                <img src={preview} alt="Preview" className="post-image-preview" />
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="post-image-preview"
+                />
               ) : (
                 <div className="post-image-placeholder">
                   <span className="post-image-plus">+</span>

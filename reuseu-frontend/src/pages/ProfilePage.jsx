@@ -1,5 +1,5 @@
-import NavBar from "./NavBar";
-import "./ProfilePage.css";
+import NavBar from "../components/NavBar";
+import "../styles/ProfilePage.css";
 
 function ProfilePage() {
   const user = {
@@ -12,7 +12,6 @@ function ProfilePage() {
 
   return (
     <div className="profile-page">
-
       <main className="profile-main">
         <section className="profile-card">
           <div className="profile-top">
@@ -27,9 +26,7 @@ function ProfilePage() {
             <div className="profile-stats-row">
               <div className="profile-rating">
                 <span className="profile-label">Rating</span>
-                <span className="profile-stars">
-                  {"★".repeat(user.rating)}
-                </span>
+                <span className="profile-stars">{"★".repeat(user.rating)}</span>
               </div>
 
               <div className="profile-leaderboard">

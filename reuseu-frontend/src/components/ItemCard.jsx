@@ -1,4 +1,4 @@
-import "./ItemCard.css";
+import "../styles/ItemCard.css";
 
 function ItemCard({ itemName, userName, deadline, image }) {
   return (
