@@ -11,7 +11,6 @@ function PostPage() {
   const [preview, setPreview] = useState("");
   const navigate = useNavigate();
 
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -24,25 +23,25 @@ function PostPage() {
     e.preventDefault();
 
     const user = JSON.parse(localStorage.getItem("user"));
-    
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("postedById", user.id);
-    formmData.append("image", image);
+    formData.append("image", image);
 
-    try{
-      const response = await fetch("http://localhost:8080/api/items",{
-        method:"POST",
+    try {
+      const response = await fetch("http://localhost:8080/api/items", {
+        method: "POST",
         body: formData,
       });
 
-      if(!response.ok) throw new Error("Failed to post item");
+      if (!response.ok) throw new Error("Failed to post item");
 
       const item = await response.json();
       console.log("Posted:", item);
       navigate("/feed");
-    }catch(err){
+    } catch (err) {
       console.error(err.message);
     }
   };
