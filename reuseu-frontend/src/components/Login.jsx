@@ -328,6 +328,7 @@ function LoginForm({ onSwitch }) {
 
   return (
     <>
+    <Header />
       <h1 className="form-title">Log In</h1>
 
       {success && (

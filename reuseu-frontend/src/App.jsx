@@ -17,6 +17,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/itemcard" element={<ItemCard />} />
       <Route path="/postpage" element={<PostPage />} />
+      <Route path="/NavBar" element={<NavBar />} />
       <Route path="/main" element={<MainPage />} />
 
     </Routes>
