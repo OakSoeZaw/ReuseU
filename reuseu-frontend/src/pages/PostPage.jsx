@@ -20,7 +20,7 @@ function PostPage() {
     setPreview(URL.createObjectURL(file));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user = JSON.parse(localStorage.getItem("user"));
