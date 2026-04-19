@@ -1,5 +1,5 @@
 import { useState } from "react";
-import WelcomePage from "./components/WelcomePage";
+import WelcomePage from "./components/Header";
 
 function App() {
     const [started, setStarted] = useState(false);

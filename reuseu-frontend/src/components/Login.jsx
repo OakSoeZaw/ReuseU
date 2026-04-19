@@ -29,6 +29,7 @@ const styles = `
     color: #52d9a0;
     line-height: 1;
     margin-bottom: 2px;
+    text-align: center;
   }
 
   .card-portal {
@@ -37,6 +38,7 @@ const styles = `
     text-transform: uppercase;
     color: rgba(255,255,255,0.3);
     margin-bottom: 44px;
+    text-align: center;
   }
 
   .form-title {
@@ -45,6 +47,7 @@ const styles = `
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 32px;
+    text-align: center;
   }
 
   .form-group { margin-bottom: 16px; }
@@ -289,42 +292,57 @@ function GoogleIcon() {
 function LoginForm({ onSwitch }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
-  const [remember, setRemember] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const validate = () => {
-    const e = {};
-    if (!email) e.email = "School email is required.";
-    else if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = "Enter a valid email address.";
-    if (!password) e.password = "Password is required.";
-    else if (password.length < 6) e.password = "Password must be at least 6 characters.";
-    return e;
-  };
+  function validate() {
+    const errors = {};
+    if (!email) errors.email = "School email is required.";
+    else if (!email.includes("@")) errors.email = "Enter a valid email address.";
+    if (!password) errors.password = "Password is required.";
+    else if (password.length < 6) errors.password = "Password must be at least 6 characters.";
+    return errors;
+  }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+    const foundErrors = validate();
+    if (Object.keys(foundErrors).length > 0) {
+      setErrors(foundErrors);
+      return;
+    }
     setErrors({});
     setLoading(true);
-    setTimeout(() => { setLoading(false); setSuccess(true); }, 1800);
-  };
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+    }, 1800);
+  }
+
+  function clearError(field) {
+    setErrors(prev => ({ ...prev, [field]: "" }));
+  }
 
   return (
     <>
       <h1 className="form-title">Log In</h1>
-      {success && <div className="success-banner">✓ Logged in successfully! Redirecting...</div>}
+
+      {success && (
+        <div className="success-banner">✓ Logged in successfully! Redirecting...</div>
+      )}
+
       <form onSubmit={handleSubmit} noValidate>
         <div className="form-group">
           <label className="form-label">School Email</label>
           <input
             className={`form-input${errors.email ? " error" : ""}`}
-            type="email" placeholder="you@school.edu"
+            type="email"
+            placeholder="you@oswego.edu"
             value={email}
-            onChange={ev => { setEmail(ev.target.value); setErrors(p => ({...p, email: ""})); }}
+            onChange={e => { setEmail(e.target.value); clearError("email"); }}
             autoComplete="email"
           />
           {errors.email && <div className="error-msg">{errors.email}</div>}
@@ -335,13 +353,14 @@ function LoginForm({ onSwitch }) {
           <div className="input-wrap">
             <input
               className={`form-input has-toggle${errors.password ? " error" : ""}`}
-              type={showPw ? "text" : "password"} placeholder="Enter your password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
               value={password}
-              onChange={ev => { setPassword(ev.target.value); setErrors(p => ({...p, password: ""})); }}
+              onChange={e => { setPassword(e.target.value); clearError("password"); }}
               autoComplete="current-password"
             />
-            <button type="button" className="pw-toggle" onClick={() => setShowPw(v => !v)}>
-              <EyeIcon open={showPw} />
+            <button type="button" className="pw-toggle" onClick={() => setShowPassword(!showPassword)}>
+              <EyeIcon open={showPassword} />
             </button>
           </div>
           {errors.password && <div className="error-msg">{errors.password}</div>}
@@ -349,7 +368,7 @@ function LoginForm({ onSwitch }) {
 
         <div className="form-row">
           <label className="checkbox-label">
-            <input type="checkbox" checked={remember} onChange={() => setRemember(v => !v)} />
+            <input type="checkbox" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />
             Remember me
           </label>
           <a href="#" className="forgot-link">Forgot password?</a>
@@ -360,82 +379,126 @@ function LoginForm({ onSwitch }) {
         </button>
 
         <div className="divider">or continue with</div>
-        <button type="button" className="sso-btn"><GoogleIcon /> Log in with Google</button>
+        <button type="button" className="sso-btn">
+          <GoogleIcon /> Log in with Google
+        </button>
       </form>
 
       <p className="form-switch">
-        Don't have an account? <a href="#" onClick={e => { e.preventDefault(); onSwitch(); }}>Create one here</a>
+        Don't have an account?{" "}
+        <a href="#" onClick={e => { e.preventDefault(); onSwitch(); }}>Create one here</a>
       </p>
     </>
   );
 }
 
 function RegisterForm({ onSwitch }) {
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", password: "", confirm: "" });
-  const [showPw, setShowPw] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [agreed, setAgreed] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const set = (key) => (ev) => {
-    setForm(p => ({ ...p, [key]: ev.target.value }));
-    setErrors(p => ({ ...p, [key]: "" }));
-  };
+  function clearError(field) {
+    setErrors(prev => ({ ...prev, [field]: "" }));
+  }
 
-  const validate = () => {
-    const e = {};
-    if (!form.firstName.trim()) e.firstName = "Required.";
-    if (!form.lastName.trim()) e.lastName = "Required.";
-    if (!form.email) e.email = "School email is required.";
-    else if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = "Enter a valid email address.";
-    if (!form.password) e.password = "Password is required.";
-    else if (form.password.length < 6) e.password = "At least 6 characters.";
-    if (!form.confirm) e.confirm = "Please confirm your password.";
-    else if (form.confirm !== form.password) e.confirm = "Passwords do not match.";
-    if (!agreed) e.terms = "You must agree to the terms.";
-    return e;
-  };
+  function validate() {
+    const errors = {};
+    if (!firstName.trim()) errors.firstName = "Required.";
+    if (!lastName.trim()) errors.lastName = "Required.";
+    if (!email) errors.email = "School email is required.";
+    else if (!email.includes("@")) errors.email = "Enter a valid email address.";
+    if (!password) errors.password = "Password is required.";
+    else if (password.length < 6) errors.password = "At least 6 characters.";
+    if (!confirmPassword) errors.confirmPassword = "Please confirm your password.";
+    else if (confirmPassword !== password) errors.confirmPassword = "Passwords do not match.";
+    if (!agreedToTerms) errors.terms = "You must agree to the terms.";
+    return errors;
+  }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+    const foundErrors = validate();
+    if (Object.keys(foundErrors).length > 0) {
+      setErrors(foundErrors);
+      return;
+    }
     setErrors({});
     setLoading(true);
-    setTimeout(() => { setLoading(false); setSuccess(true); }, 1800);
-  };
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+    }, 1800);
+  }
 
   return (
     <>
       <h1 className="form-title">Create Account</h1>
-      {success && <div className="success-banner">✓ Account created! Welcome to ReuseU.</div>}
+
+      {success && (
+        <div className="success-banner">✓ Account created! Welcome to ReuseU.</div>
+      )}
+
       <form onSubmit={handleSubmit} noValidate>
         <div className="name-row">
           <div className="form-group">
             <label className="form-label">First Name</label>
-            <input className={`form-input${errors.firstName ? " error" : ""}`} type="text" placeholder="Jane" value={form.firstName} onChange={set("firstName")} />
+            <input
+              className={`form-input${errors.firstName ? " error" : ""}`}
+              type="text"
+              placeholder="John"
+              value={firstName}
+              
+            />
             {errors.firstName && <div className="error-msg">{errors.firstName}</div>}
           </div>
           <div className="form-group">
             <label className="form-label">Last Name</label>
-            <input className={`form-input${errors.lastName ? " error" : ""}`} type="text" placeholder="Smith" value={form.lastName} onChange={set("lastName")} />
+            <input
+              className={`form-input${errors.lastName ? " error" : ""}`}
+              type="text"
+              placeholder="Doe"
+              value={lastName}
+              onChange={e => { setLastName(e.target.value); clearError("lastName"); }}
+            />
             {errors.lastName && <div className="error-msg">{errors.lastName}</div>}
           </div>
         </div>
 
         <div className="form-group">
           <label className="form-label">School Email</label>
-          <input className={`form-input${errors.email ? " error" : ""}`} type="email" placeholder="you@school.edu" value={form.email} onChange={set("email")} autoComplete="email" />
+          <input
+            className={`form-input${errors.email ? " error" : ""}`}
+            type="email"
+            placeholder="you@oswego.edu"
+            value={email}
+            onChange={e => { setEmail(e.target.value); clearError("email"); }}
+            autoComplete="email"
+          />
           {errors.email && <div className="error-msg">{errors.email}</div>}
         </div>
 
         <div className="form-group">
           <label className="form-label">Password</label>
           <div className="input-wrap">
-            <input className={`form-input has-toggle${errors.password ? " error" : ""}`} type={showPw ? "text" : "password"} placeholder="Create a password" value={form.password} onChange={set("password")} autoComplete="new-password" />
-            <button type="button" className="pw-toggle" onClick={() => setShowPw(v => !v)}><EyeIcon open={showPw} /></button>
+            <input
+              className={`form-input has-toggle${errors.password ? " error" : ""}`}
+              type={showPassword ? "text" : "password"}
+              placeholder="Create a password"
+              value={password}
+              onChange={e => { setPassword(e.target.value); clearError("password"); }}
+              autoComplete="new-password"
+            />
+            <button type="button" className="pw-toggle" onClick={() => setShowPassword(!showPassword)}>
+              <EyeIcon open={showPassword} />
+            </button>
           </div>
           {errors.password && <div className="error-msg">{errors.password}</div>}
         </div>
@@ -443,28 +506,46 @@ function RegisterForm({ onSwitch }) {
         <div className="form-group">
           <label className="form-label">Confirm Password</label>
           <div className="input-wrap">
-            <input className={`form-input has-toggle${errors.confirm ? " error" : ""}`} type={showConfirm ? "text" : "password"} placeholder="Repeat your password" value={form.confirm} onChange={set("confirm")} autoComplete="new-password" />
-            <button type="button" className="pw-toggle" onClick={() => setShowConfirm(v => !v)}><EyeIcon open={showConfirm} /></button>
+            <input
+              className={`form-input has-toggle${errors.confirmPassword ? " error" : ""}`}
+              type={showConfirm ? "text" : "password"}
+              placeholder="Repeat your password"
+              value={confirmPassword}
+              onChange={e => { setConfirmPassword(e.target.value); clearError("confirmPassword"); }}
+              autoComplete="new-password"
+            />
+            <button type="button" className="pw-toggle" onClick={() => setShowConfirm(!showConfirm)}>
+              <EyeIcon open={showConfirm} />
+            </button>
           </div>
-          {errors.confirm && <div className="error-msg">{errors.confirm}</div>}
+          {errors.confirmPassword && <div className="error-msg">{errors.confirmPassword}</div>}
         </div>
 
         <div className="terms-row">
-          <input type="checkbox" checked={agreed} onChange={() => { setAgreed(v => !v); setErrors(p => ({...p, terms: ""})); }} />
+          <input
+            type="checkbox"
+            checked={agreedToTerms}
+            onChange={() => { setAgreedToTerms(!agreedToTerms); clearError("terms"); }}
+          />
           <span>I agree to the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a></span>
         </div>
-        {errors.terms && <div className="error-msg" style={{marginTop: -8, marginBottom: 14}}>{errors.terms}</div>}
+        {errors.terms && (
+          <div className="error-msg" style={{ marginTop: -8, marginBottom: 14 }}>{errors.terms}</div>
+        )}
 
         <button className="submit-btn" type="submit" disabled={loading || success}>
           {loading ? <span className="spinner" /> : success ? "Account Created ✓" : "Create Account"}
         </button>
 
         <div className="divider">or register with</div>
-        <button type="button" className="sso-btn"><GoogleIcon /> Sign up with Google</button>
+        <button type="button" className="sso-btn">
+          <GoogleIcon /> Sign up with Google
+        </button>
       </form>
 
       <p className="form-switch">
-        Already have an account? <a href="#" onClick={e => { e.preventDefault(); onSwitch(); }}>Log in here</a>
+        Already have an account?{" "}
+        <a href="#" onClick={e => { e.preventDefault(); onSwitch(); }}>Log in here</a>
       </p>
     </>
   );
