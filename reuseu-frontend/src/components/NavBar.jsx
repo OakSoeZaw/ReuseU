@@ -1,6 +1,6 @@
-import "./Header.css";
+import "./NavBar.css";
 
-function Header() {
+function NavBar() {
     return (
         <header className="app-header">
             <div className="header-top">
@@ -27,4 +27,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default NavBar;
